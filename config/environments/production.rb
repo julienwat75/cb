@@ -77,4 +77,14 @@ Moneyhats::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  
+  config.after_initialize do
+    ActiveMerchant::Billing::Base.mode = :production
+    OrderTransaction.gateway = ActiveMerchant::Billing::BraintreeGateway.new(
+    
+        :login => 'LIVE_LOGIN',
+        :password => 'LIVE_PASSWORD'
+        )
+    end
 end
